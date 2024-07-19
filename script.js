@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', () => {
+        loadTasks();
+        // Other initialization code
+    });
     // Selecting DOM elements
     const addButton = document.getElementById('add-task-btn');
     const taskInput = document.getElementById('task-input');
@@ -36,7 +40,28 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Please enter a task!');
         }
     }
-
+    function addTask(taskText, save = true) {
+        const li = document.createElement('li');
+        li.textContent = taskText;
+    
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.classList.add('remove-btn');
+        removeButton.addEventListener('click', function() {
+            li.remove();
+            removeTask(taskText);
+        });
+    
+        li.appendChild(removeButton);
+        taskList.appendChild(li);
+    
+        tasks.push(taskText); // Add task to tasks array
+    
+        if (save) {
+            // Update Local Storage with the updated tasks array
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+    }
     // Event listener for add button click
     addButton.addEventListener('click', addTask);
 
